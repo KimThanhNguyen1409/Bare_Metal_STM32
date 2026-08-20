@@ -6,7 +6,7 @@ void delay_us(uint32_t us)
     if (us == 0)
         return;
     SYSTICK->LOAD = (us * CPU_FREQ_MHZ) - 1;
-    SYSTICK->VAL = 0;
+    SYSTICK->VAL  = 0;
     SYSTICK->CTRL = 5;
     while (!(SYSTICK->CTRL & (1 << 16)))
     {
