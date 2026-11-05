@@ -113,28 +113,28 @@ typedef struct
     volatile uint32_t VAL;
     volatile uint32_t CALIB;
 } Systick_TypeDef;
-#define RCC ((RCC_TypeDef *)RCC_PERIPH_BASE)
+#define RCC ((RCC_TypeDef*)RCC_PERIPH_BASE)
 
-#define GPIOA ((GPIO_TypeDef *)GPIOA_PERIPH_BASE)
-#define GPIOB ((GPIO_TypeDef *)GPIOB_PERIPH_BASE)
-#define GPIOC ((GPIO_TypeDef *)GPIOC_PERIPH_BASE)
-#define GPIOD ((GPIO_TypeDef *)GPIOD_PERIPH_BASE)
-#define GPIOE ((GPIO_TypeDef *)GPIOE_PERIPH_BASE)
-#define GPIOF ((GPIO_TypeDef *)GPIOF_PERIPH_BASE)
-#define GPIOG ((GPIO_TypeDef *)GPIOG_PERIPH_BASE)
+#define GPIOA ((GPIO_TypeDef*)GPIOA_PERIPH_BASE)
+#define GPIOB ((GPIO_TypeDef*)GPIOB_PERIPH_BASE)
+#define GPIOC ((GPIO_TypeDef*)GPIOC_PERIPH_BASE)
+#define GPIOD ((GPIO_TypeDef*)GPIOD_PERIPH_BASE)
+#define GPIOE ((GPIO_TypeDef*)GPIOE_PERIPH_BASE)
+#define GPIOF ((GPIO_TypeDef*)GPIOF_PERIPH_BASE)
+#define GPIOG ((GPIO_TypeDef*)GPIOG_PERIPH_BASE)
 
-#define USART1 ((USART_TypeDef *)USART1_PERIPH_BASE)
-#define USART2 ((USART_TypeDef *)USART2_PERIPH_BASE)
-#define USART3 ((USART_TypeDef *)USART3_PERIPH_BASE)
-#define UART4 ((USART_TypeDef *)UART4_PERIPH_BASE)
-#define UART5 ((USART_TypeDef *)UART5_PERIPH_BASE)
+#define USART1 ((USART_TypeDef*)USART1_PERIPH_BASE)
+#define USART2 ((USART_TypeDef*)USART2_PERIPH_BASE)
+#define USART3 ((USART_TypeDef*)USART3_PERIPH_BASE)
+#define UART4 ((USART_TypeDef*)UART4_PERIPH_BASE)
+#define UART5 ((USART_TypeDef*)UART5_PERIPH_BASE)
 
-#define TIM1 ((TIMER_TypeDef *)TIMER1_PERIPH_BASE)
-#define TIM2 ((TIMER_TypeDef *)TIMER2_PERIPH_BASE)
-#define TIM3 ((TIMER_TypeDef *)TIMER3_PERIPH_BASE)
+#define TIM1 ((TIMER_TypeDef*)TIMER1_PERIPH_BASE)
+#define TIM2 ((TIMER_TypeDef*)TIMER2_PERIPH_BASE)
+#define TIM3 ((TIMER_TypeDef*)TIMER3_PERIPH_BASE)
 
-#define I2C1 ((I2C_TypeDef *)I2C1_PERIPH_BASE)
-#define I2C2 ((I2C_TypeDef *)I2C2_PERIPH_BASE)
+#define I2C1 ((I2C_TypeDef*)I2C1_PERIPH_BASE)
+#define I2C2 ((I2C_TypeDef*)I2C2_PERIPH_BASE)
 
-#define SYSTICK ((Systick_TypeDef *)Systick)
+#define SYSTICK ((Systick_TypeDef*)Systick)
 #endif

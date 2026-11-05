@@ -1,6 +1,6 @@
-#include "stm32f103.h"
-#include "gpio.h"
 #include "delay.h"
+#include "gpio.h"
+#include "stm32f103.h"
 
 int main(void)
 {
