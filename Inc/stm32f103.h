@@ -17,19 +17,27 @@
 #define GPIOC_PERIPH_BASE (APB2PERIPH_BASE + 0x1000UL)
 #define GPIOB_PERIPH_BASE (APB2PERIPH_BASE + 0x0C00UL)
 #define GPIOA_PERIPH_BASE (APB2PERIPH_BASE + 0x0800UL)
+
 // USART's address
 #define USART1_PERIPH_BASE (APB2PERIPH_BASE + 0x3800UL)
 #define USART2_PERIPH_BASE (APB1PERIPH_BASE + 0x4400UL)
 #define USART3_PERIPH_BASE (APB1PERIPH_BASE + 0x4800UL)
 #define UART4_PERIPH_BASE (APB1PERIPH_BASE + 0x4C00UL)
 #define UART5_PERIPH_BASE (APB1PERIPH_BASE + 0x5000UL)
+
 // TIMER's address
 #define TIMER1_PERIPH_BASE (APB2PERIPH_BASE + 0x2C00UL)
 #define TIMER2_PERIPH_BASE (APB1PERIPH_BASE + 0x0000UL)
 #define TIMER3_PERIPH_BASE (APB1PERIPH_BASE + 0x0400UL)
+
 // I2C's address
 #define I2C1_PERIPH_BASE (APB1PERIPH_BASE + 0x5400UL)
 #define I2C2_PERIPH_BASE (APB1PERIPH_BASE + 0x5800UL)
+
+// SPI's address 
+#define SPI1_PERIPH_BASE (APB2PERIPH_BASE + 0x3000UL)
+#define SPI2_PERIPH_BASE (APB1PERIPH_BASE + 0x3800UL)
+#define SPI3_PERIPH_BASE (APB1PERIPH_BASE + 0x3C00UL)
 
 #define Systick 0xE000E010
 typedef struct
@@ -93,6 +101,7 @@ typedef struct
     volatile uint32_t DCR;
     volatile uint32_t DMAR;
 } TIMER_TypeDef;
+
 typedef struct
 {
     volatile uint32_t CR1;
@@ -105,6 +114,18 @@ typedef struct
     volatile uint32_t CCR;
     volatile uint32_t TRISE;
 } I2C_TypeDef;
+
+typedef struct{
+    volatile uint32_t CR1;   
+    volatile uint32_t CR2;
+    volatile uint32_t SR;
+    volatile uint32_t DR;
+    volatile uint32_t CRCPR;
+    volatile uint32_t RXCRCR;
+    volatile uint32_t TXCRCR;
+    volatile uint32_t I2SCFGR;
+    volatile uint32_t I2SPR;
+} SPI_TypeDef;
 
 typedef struct
 {
@@ -135,6 +156,10 @@ typedef struct
 
 #define I2C1 ((I2C_TypeDef*)I2C1_PERIPH_BASE)
 #define I2C2 ((I2C_TypeDef*)I2C2_PERIPH_BASE)
+
+#define SPI1 ((SPI_TypeDef*)SPI1_PERIPH_BASE)
+#define SPI2 ((SPI_TypeDef*)SPI2_PERIPH_BASE)
+#define SPI3 ((SPI_TypeDef*)SPI3_PERIPH_BASE)
 
 #define SYSTICK ((Systick_TypeDef*)Systick)
 #endif
