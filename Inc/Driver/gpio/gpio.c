@@ -1,43 +1,71 @@
 #include "gpio.h"
 
-void GPIO_EnableClock(GPIO_TypeDef* GPIOx)
+GPIO_Status_t GPIO_EnableClock(GPIO_TypeDef *GPIOx)
 {
-    switch ((uint32_t)GPIOx)
+    if (GPIOx == NULL)
     {
-        case GPIOA_PERIPH_BASE:
-            RCC->APB2ENR |= (1 << 2);
-            break;
-        case GPIOB_PERIPH_BASE:
-            RCC->APB2ENR |= (1 << 3);
-            break;
-        case GPIOC_PERIPH_BASE:
-            RCC->APB2ENR |= (1 << 4);
-            break;
-        case GPIOD_PERIPH_BASE:
-            RCC->APB2ENR |= (1 << 5);
-            break;
-        case GPIOE_PERIPH_BASE:
-            RCC->APB2ENR |= (1 << 6);
-            break;
-        default:
-            break;
+        return GPIO_ERR_NULL_PTR;
     }
+    if (GPIOx == GPIOA)
+        RCC->APB2ENR |= (1U << 2);
+    else if (GPIOx == GPIOB)
+        RCC->APB2ENR |= (1U << 3);
+    else if (GPIOx == GPIOC)
+        RCC->APB2ENR |= (1U << 4);
+    else if (GPIOx == GPIOD)
+        RCC->APB2ENR |= (1U << 5);
+    else if (GPIOx == GPIOE)
+        RCC->APB2ENR |= (1U << 6);
+    else
+    {
+        return GPIO_ERR_PARAM;
+    }
+    return GPIO_OK;
 }
-void GPIO_SetPin(GPIO_TypeDef* GPIOx, uint8_t pin, GPIO_MODE_Typedef mode)
+
+GPIO_Status_t GPIO_SetPin(GPIO_TypeDef *GPIOx, uint8_t pin, GPIO_Mode_t mode)
 {
+    if (GPIOx == NULL)
+    {
+        return GPIO_ERR_NULL_PTR;
+    }
+    if (pin > 15)
+    {
+        return GPIO_ERR_PARAM;
+    }
+    if (mode == GPIO_MODE_INPUT_PULLUP)
+    {
+        GPIOx->BSRR = (1U << pin);
+    }
+    else if (mode == GPIO_MODE_INPUT_PULLDOWN)
+    {
+        GPIOx->BRR = (1U << pin);
+    }
+
+    uint32_t config_value = (uint32_t)(mode & 0x0FU);
+
     if (pin < 8)
     {
-        GPIOx->CRL &= ~(0xF << (pin * 4));
-        GPIOx->CRL |= (mode << (pin * 4));
+        uint32_t shift = pin * 4U;
+        GPIOx->CRL &= ~(0x0FU << shift);
+        GPIOx->CRL |= (config_value << shift);
     }
     else
     {
-        GPIOx->CRH &= ~(0xF << ((pin - 8) * 4));
-        GPIOx->CRH |= (mode << ((pin - 8) * 4));
+        uint32_t shift = (pin - 8U) * 4U;
+        GPIOx->CRH &= ~(0x0FU << shift);
+        GPIOx->CRH |= (config_value << shift);
     }
+    return GPIO_OK;
 }
-void GPIO_WritePin(GPIO_TypeDef* GPIOx, uint8_t pin, uint8_t state)
+
+GPIO_Status_t GPIO_WritePin(GPIO_TypeDef *GPIOx, uint8_t pin, uint8_t state)
 {
+    if (GPIOx == NULL)
+        return GPIO_ERR_NULL_PTR;
+    if (pin > 15)
+        return GPIO_ERR_PARAM;
+
     if (state)
     {
         GPIOx->BSRR = (1 << pin);
@@ -46,12 +74,46 @@ void GPIO_WritePin(GPIO_TypeDef* GPIOx, uint8_t pin, uint8_t state)
     {
         GPIOx->BRR = (1 << pin);
     }
+
+    return GPIO_OK;
 }
-uint8_t GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint8_t pin)
+uint8_t GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint8_t pin)
 {
-    return ((GPIOx->IDR >> pin) & 1);
+    if (GPIOx == NULL || pin > 15)
+    {
+        return 0;
+    }
+    return (uint8_t)((GPIOx->IDR >> pin) & 0x01U);
 }
-void GPIO_Toggle(GPIO_TypeDef* GPIOx, uint8_t pin)
+void GPIO_Toggle(GPIO_TypeDef *GPIOx, uint8_t pin)
 {
-    GPIOx->ODR ^= (1 << pin);
+    if (GPIOx == NULL)
+        return GPIO_ERR_NULL_PTR;
+    if (pin > 15)
+        return GPIO_ERR_PARAM;
+
+    if (GPIOx->ODR & (1U << pin))
+    {
+        GPIOx->BRR = (1U << pin);
+    }
+    else
+    {
+        GPIOx->BSRR = (1U << pin);
+    }
+    return GPIO_OK;
+}
+
+void GPIO_WritePort(GPIO_TypeDef *GPIOx, uint16_t value)
+{
+    if (GPIOx != NULL)
+    {
+        GPIOx->ODR = value;
+    }
+}
+
+uint16_t GPIO_ReadPort(GPIO_TypeDef *GPIOx)
+{
+    if (GPIOx == NULL)
+        return 0;
+    return (uint16_t)(GPIOx->IDR & 0xFFFFU);
 }
